@@ -1,0 +1,11 @@
+[package]
+name = "berde"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = { version = "0.9.1", default-features = true, features = [ "serialize" ]}
+bincode = "1.3.3"
+serde = "1.0.156"
