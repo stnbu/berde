@@ -1,3 +1,8 @@
+/// What's up with this?
+///  --
+/// [bevy@discord]
+///
+/// The below code fails to compile at the `bincode::deserialize` call. Do I really need to manually implement `Deserialize<'_>` is not implemented for `&Element`?
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -19,8 +24,6 @@ fn main() {
         .add_system(bevy::window::close_on_esc)
         .run();
 }
-
-// systems
 
 pub fn serialize_world(
     keys: Res<Input<KeyCode>>,
@@ -62,20 +65,19 @@ pub fn reload_world(
     if keys.just_released(KeyCode::Up) {
         drop_query.for_each(|e| commands.entity(e).despawn_recursive());
         for bin in serialized_world.0.iter() {
-            dbg!(bin);
-            // match bincode::deserialize::<SerializableElement>(bin) {
-            //     Ok(row) => {
-            //         info!("->> {row:?}");
-            //     }
-            //     Err(err) => {
-            //         error!("xx");
-            //     }
-            // }
+            // XXX - Compiler error here:
+            // the trait `Deserialize<'_>` is not implemented for `&Element`
+            match bincode::deserialize::<SerializableElement>(bin) {
+                Ok(row) => {
+                    info!("->> {row:?}");
+                }
+                Err(err) => {
+                    error!("xx");
+                }
+            }
         }
     }
 }
-
-//
 
 fn spawn_masses(mut commands: Commands) {
     commands
