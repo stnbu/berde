@@ -1,8 +1,3 @@
-/// What's up with this?
-///  --
-/// [bevy@discord]
-///
-/// The below code fails to compile at the `bincode::deserialize` call. Do I really need to manually implement `Deserialize<'_>` is not implemented for `&Element`?
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
